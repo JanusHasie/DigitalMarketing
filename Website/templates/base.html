@@ -20,6 +20,7 @@
     </head>
 
     <body>
+        
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button 
                 class="navbar-toggler" 
@@ -63,5 +64,9 @@
             type="text/javascript"
             src="{{ url_for('static', filename='index.js') }}"
         ></script>
+        {% block body %}
+        <h1>This is a default heading</h1>
+        <p>This is a default paragraph</p>
+        {% endblock %}
     </body>
 </html>
