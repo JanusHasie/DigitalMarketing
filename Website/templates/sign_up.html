@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block content %}
-
+{% extends 'base.html' %} {% block title %}Sign Up{% endblock %} {% block content %}
+<body>{% block body %}
 <form method= "POST">
     <h3 align = "center">Sign Up</h3>
     <div class = "form-group">
@@ -44,4 +44,6 @@
     </div>
     <br />
     <button type="submit" class="btn btn-primary">Okay!</button>
+</form>
+{% endblock %}</body>
 {% endblock %}
