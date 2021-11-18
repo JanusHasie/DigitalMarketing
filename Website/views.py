@@ -4,7 +4,7 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home() :
-    return render_template("home.html")
+    return "home.html"
 
 # , request, flash, jsonify
 # from flask_login import login_required, current_user
