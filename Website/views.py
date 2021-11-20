@@ -1,12 +1,23 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, redirect
 from flask_login import login_required, current_user
 from .models import Note
 from . import db
 import json
+import os
 
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
+
+@views.route("/upload-image", methods=["GET", "POST"])
+def upload_image() :
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            image.save(os.path.join())
+            return redirect(request.url)
+    return render_template("home.html", user=current_user)
+
 @login_required
 def home() :
     if request.method == 'POST':
@@ -21,6 +32,8 @@ def home() :
             flash('Note added!', category='success')
 
     return render_template("home.html", user=current_user)
+
+
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():
