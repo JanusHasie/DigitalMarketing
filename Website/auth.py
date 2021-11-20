@@ -24,7 +24,7 @@ def login() :
         else:
             flash('Could not find email...', category='issue')
 
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
 @login_required
@@ -51,6 +51,10 @@ def sign_up() :
             flash('Passwords are not the same, please retry.', category='issue')
         elif len(password1)<6 :
             flash('Your password is less than 6 characters. Might cause weak security.', category='warning')
+            new_user = User(email=email, firstname=firstname, password=generate_password_hash(password1, method="sha256"))
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('views.home'))
         else :
             new_user = User(email=email, firstname=firstname, password=generate_password_hash(password1, method="sha256"))
             db.session.add(new_user)
@@ -58,4 +62,4 @@ def sign_up() :
             flash('Created Account!', category='good')
             return redirect(url_for('views.home'))
 
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", user=current_user)
