@@ -2,13 +2,22 @@
     <h1 align = "center">Welcome {{ user.firstname }}, to your Home page</h1>
     <p align = "center">This is the main page for my (31581900, Janus Haasbroek) Digital Marketing web page.</p>
 
-    <div class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
+    <hr style= "color:darkturquoise" width="250"/>
+    <h2>Upload an image</h2>   
+    <form method= "POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Choose image</label>
+                <div class= "custom-file">
+                 <input type="file" class="custom-file-input" name="image" id="image">
+                 <label class="custom-file-label" for="image">Choose image...</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
 
     <br /><br />
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <hr style= "color:darkturquoise" width="250px"/>
     <h1 align="center">Notes</h1>
         <ul class="list-group list-group-flush" id="notes">
             {% for note in user.notes %}
