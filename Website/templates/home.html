@@ -1,14 +1,14 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content%}
-    <head>
-        <style>
-            body {
-                background-image :url("C:\Users\User\Documents\Uni\Akademie\YEAR 3\SEMESTER 2\CMPG323\project2\DigitalMarketing-1\Website\static\min.jpg");
-            }
-        </style>
-    </head>
-    <h1 style = "color:white" align = "center">Welcome {{ user }}, to your Home page</h1>
-    <p style = "color:white" align = "center">This is the main page for my (31581900, Janus Haasbroek) Digital Marketing web page.</p>
+    <h1 align = "center">Welcome {{ user.firstname }}, to your Home page</h1>
+    <p align = "center">This is the main page for my (31581900, Janus Haasbroek) Digital Marketing web page.</p>
 
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+
+    <br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     <h1 align="center">Notes</h1>
         <ul class="list-group list-group-flush" id="notes">
             {% for note in user.notes %}
