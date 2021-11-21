@@ -18,10 +18,10 @@ class User(db.Model, UserMixin) :
     firstname = db.Column(db.String(100))
     notes = db.relationship('Note')
 
-mydb = mysql.connector.connect(
-    host="JanusHasie.mysql.pythonanywhere-services.com",
-    user="JanusHasie",
-    password="Janus0405",
-    database="JanusHasie$Project2DB"
-)
+# mydb = mysql.connector.connect(
+#     host="JanusHasie.mysql.pythonanywhere-services.com",
+#     user="JanusHasie",
+#     password="Janaster0405",
+#     database="JanusHasie$Project2DB"
+# )
 
