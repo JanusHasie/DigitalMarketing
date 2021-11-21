@@ -14,8 +14,8 @@ current_app.config['MYSQL_HOST'] = 'JanusHasie.mysql.pythonanywhere-services.com
 current_app.config['MYSQL_USER'] = 'JanusHasie'
 current_app.config['MYSQL_PASSWORD'] ='Janaster0405'
 current_app.config['MYSQL_DB'] = 'JanusHasie$Project2DB'
-current_app.config['MYSQL_CURSORCLASS'] = 'aCursor'
-mysql = MySQL(images)
+current_app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+mysql = MySQL(current_app)
 
 #PHOTO UPLOADS HERE
 UPLOAD_DIRECTORY = 'Website/static/uploadImg/'
@@ -28,7 +28,7 @@ def allowed_file(filename) :
 @images.route('/upload', methods = ['GET', 'POST'])
 def upload() :
     cursor = mysql.connection.cursor()
-    cur = mysql.connection.cursor(MySQLdb.cursors.aCursor)
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     now = datetime.now()
     
     if request.method == 'POST' :
