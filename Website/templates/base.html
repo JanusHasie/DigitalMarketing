@@ -21,7 +21,7 @@
         <title>{% block title %}Home{% endblock %}</title>
     </head>
 
-    <body style="background-image: url({{ url_for('static', filename='images/min.jpg') }});">
+    <body style="background-image: url({{ url_for('static', filename='bgimages/min.jpg') }});">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button 
@@ -58,7 +58,7 @@
                                 </button>
                         </div>
                         {% elif category == 'warning' %}
-                            <div class="alert-warning alter-dismissable fade show" role="alert">
+                            <div class="alert alert-warning alter-dismissable fade show" role="alert">
                                 {{ message }}
                                     <button type="button" class="close" data-dismiss="alert">
                                         <span aria-hidden="true">&times;</span>

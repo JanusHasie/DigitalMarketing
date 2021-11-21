@@ -7,17 +7,8 @@ import os
 
 views = Blueprint('views', __name__)
 
+#NOTES
 @views.route('/', methods=['GET', 'POST'])
-
-@views.route("/upload-image", methods=["GET", "POST"])
-def upload_image() :
-    if request.method == "POST":
-        if request.files:
-            image = request.files["image"]
-            image.save(os.path.join())
-            return redirect(request.url)
-    return render_template("home.html", user=current_user)
-
 @login_required
 def home() :
     if request.method == 'POST':
@@ -33,8 +24,6 @@ def home() :
 
     return render_template("home.html", user=current_user)
 
-
-
 @views.route('/delete-note', methods=['POST'])
 def delete_note():
     note = json.loads(request.data)
@@ -46,3 +35,18 @@ def delete_note():
             db.session.commit()
 
     return jsonify({})
+
+#IMAGES UPLOAD
+@views.route("/upload-image", methods=["GET", "POST"])
+def upload_image() :
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            image.save(os.path.join())
+            return redirect(request.url)
+    return render_template("home.html", user=current_user)
+
+#IMAGES VIEW
+
+
+
