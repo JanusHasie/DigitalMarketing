@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from . import db
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import current_user
 
 images = Blueprint('images', __name__)
 #mycursor = mydb.cursor()
