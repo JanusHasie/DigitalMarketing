@@ -24,15 +24,15 @@ sshtunnel.SSH_TIMEOUT = 5.0
 sshtunnel.TUNNEL_TIMEOUT = 5.0
 
 with sshtunnel.SSHTunnelForwarder(
-    ('your SSH hostname'),
-    ssh_username='your PythonAnywhere username', ssh_password='the password you use to log in to the PythonAnywhere website',
-    remote_bind_address=('your PythonAnywhere database hostname, eg. yourusername.mysql.pythonanywhere-services.com', 3306)
+    ('JanusHasie.mysql.pythonanywhere-services.com'),
+    ssh_username='JanusHasie', ssh_password='Janaster0405',
+    remote_bind_address=('JanusHasie.mysql.pythonanywhere-services.com', 3306)
 ) as tunnel:
     connection = MySQLdb.connect(
-        user='your PythonAnywhere database username',
-        passwd='your PythonAnywhere database password',
+        user='JanusHasie',
+        passwd='Janus0405',
         host='127.0.0.1', port=tunnel.local_bind_port,
-        db='your database name, eg yourusername$mydatabase',
+        db='JanusHasie$Project2DB',
     )
     # Do stuff
     connection.close()
