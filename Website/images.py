@@ -1,24 +1,34 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
-from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+import os
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql.functions import user
+from werkzeug.utils import secure_filename
 from . import db
 from flask_login import current_user
 
-images = Blueprint('images', __name__)
-#mycursor = mydb.cursor()
+images = Blueprint( 'images', __name__)
+
 
 #PHOTO UPLOADS HERE
-photos = UploadSet('photos', IMAGES)
-images.config['UPLOADED_PHOTOS_DEST'] = 'static/uploadImg'
-configure_uploads(images, photos)
+UPLOAD_DIRECTORY = 'Website/static/uploadImg/'
+current_app.config['UPLOAD_DIRECTORY'] = UPLOAD_DIRECTORY
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename) :
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @images.route('/upload', methods = ['GET', 'POST'])
 def upload() :
-    if request.method == 'POST' and 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        return filename
-    #     img = "INSERT INTO img (image, alt) VALUES (%b, %s)"
-    #     val = ()
-    return render_template("upload.html", user=current_user)
+    if request.method == 'POST' :
+        files = request.files.getlist('files[]')
+        print(files)
+        for file in files :
+            if file and allowed_file(file.filename) :
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(current_app.config['UPLOAD_DIRECTORY'], filename))
+
+        flash('Your file(s) have been successfully uploaded!')
+    return render_template('upload.html', user=current_user)
 #END PHOTO UPLOAD
 #===============================================================
 

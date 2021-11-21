@@ -12,14 +12,19 @@ def create_app() :
     app.config['SECRET_KEY'] = '1234'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_OBJ}'
     db.init_app(app)
-
+    
+    
     from .views import views
     from .auth import auth
-    from .images import images
-
+    
+            
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
-    app.register_blueprint(images, url_prefix='/')
+    with app.app_context() :
+        from .images import images
+        app.register_blueprint(images, url_prefix='/')
+
+    
 
     from .models import User
     create_database(app)

@@ -3,6 +3,8 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 import mysql.connector
+import MySQLdb
+import sshtunnel
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,10 +20,20 @@ class User(db.Model, UserMixin) :
     firstname = db.Column(db.String(100))
     notes = db.relationship('Note')
 
-# mydb = mysql.connector.connect(
-#     host="JanusHasie.mysql.pythonanywhere-services.com",
-#     user="JanusHasie",
-#     password="Janaster0405",
-#     database="JanusHasie$Project2DB"
-# )
+sshtunnel.SSH_TIMEOUT = 5.0
+sshtunnel.TUNNEL_TIMEOUT = 5.0
+
+with sshtunnel.SSHTunnelForwarder(
+    ('your SSH hostname'),
+    ssh_username='your PythonAnywhere username', ssh_password='the password you use to log in to the PythonAnywhere website',
+    remote_bind_address=('your PythonAnywhere database hostname, eg. yourusername.mysql.pythonanywhere-services.com', 3306)
+) as tunnel:
+    connection = MySQLdb.connect(
+        user='your PythonAnywhere database username',
+        passwd='your PythonAnywhere database password',
+        host='127.0.0.1', port=tunnel.local_bind_port,
+        db='your database name, eg yourusername$mydatabase',
+    )
+    # Do stuff
+    connection.close()
 
