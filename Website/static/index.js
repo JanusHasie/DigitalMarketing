@@ -7,11 +7,20 @@ function deleteNote(noteId) {
     });
 }
 
-function deleteImg(imgId) {
+function deleteimg(imgId) {
     fetch("/delete-img", {
         method: "POST",
         body: JSON.stringify({imgId: imgId}),
     }).then((_res) => {
-        window.location.href = "/";
+        window.location.href = "/viewmine";
     });
+}
+
+function download_file(pic) {
+    fetch("/download", {
+        method: "POST",
+        body: JSON.stringify({pic: pic}),
+    }).then((_res) => {
+        window.location.href = "/viewmine"
+    })
 }

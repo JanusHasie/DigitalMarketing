@@ -1,8 +1,18 @@
 {% extends 'base.html' %} {% block title %}Upload{% endblock %} {% block content%}
 <!-- Upload an image code -->
-   
-<div class="container">
-    <h2>Upload an image</h2>
+
+<h1 align = "center">Upload an image</h1>
+<br />
+<nav aria-label="...">
+    <ul class="pagination">     
+      <li class="page-item"><a class="page-link" id= "notes" href="/">NOTES</a></li>        
+      <li class="page-item active"><a class="page-link" id="upload" href="/upload">UPLOAD<span class="sr-only">(current)</span></a></li>      
+      <li class="page-item"><a class="page-link" id="viewmine" href="/viewmine">VIEW MINE</a></li>
+      <li class="page-item"><a class="page-link" id="viewshare" href="/viewshare">SHARED</a></li>
+    </ul>
+  </nav>
+
+<div class="container"> 
     <div class="col-lg-12">
     <div class="row">
         <form method="POST" action='/upload' enctype="multipart/form-data" class="form-inline">

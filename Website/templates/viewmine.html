@@ -1,20 +1,36 @@
 {% extends 'base.html' %} {% block title %}View{% endblock %} {% block content%}
 
-<!-- View images in the form of cards -->
 <h1 align="center">View my images</h1>
-<form method= "GET">
-    {% for image in Img %}
-          <div class="card center">
-              {{ image }}
-              <!-- <img class="card-img-top" src="/static/uploadImg" id = 'images' alt="Card image cap" h> -->
-              <!-- <img src="{{ url_for('static/uploadImg', filename= image.image) }}" alt="{{ image.metadate}} "> -->
-              <a href="/viewshare" class="btn btn-primary">Send</a>
-              <button type="button" class="close" onClick="deleteImg({{ image.id }})">
-                <span aria-hidden="true">&times;</span>
-            </button>
-          </div>   
-    {% endfor %}
+<br />
+<nav aria-label="...">
+  <ul class="pagination">     
+    <li class="page-item"><a class="page-link" id= "notes" href="/">NOTES</a></li>        
+    <li class="page-item"><a class="page-link" id="upload" href="/upload">UPLOAD</a></li>      
+    <li class="page-item active"><a class="page-link" id="viewmine" href="/viewmine">VIEW MINE<span class="sr-only">(current)</span></a></li>
+    <li class="page-item"><a class="page-link" id="viewshare" href="/viewshare">SHARED</a></li>
+  </ul>
+</nav>
+
+<!-- View images in the form of cards -->
+<form method= "POST">
+  {% for List in List %}
+    <div class="card">
+      <div class="card-body">
+        <img src="{{ url_for('static', filename= List) }}">
+        <p class="card-text" style="color: black;">
+          This is the {{ List }} image.
+        </p>
+        <button type="button" class="close" onClick="deleteNote({{ List }})">
+          <span aria-hidden="true">Delete</span>
+        </button>
+        <a href="/viewmine" onClick="download({{ List }})" class="card-link">Download</a>
+      </div>
+    </div>
+  {% endfor %} 
 </form>
-    <!-- End of view images-->
+
+    <!-- <a onClink ="deleteimg{{ List }}" class="card-link">Delete</a>
+      <a href="/delete-img"
+      End of view images-->
 
 {% endblock %} 

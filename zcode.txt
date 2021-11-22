@@ -20,3 +20,20 @@
 
 # cur.execute("INSERT INTO img () VALUES (%b, %s)", [filename, now])
                 # mydb.commit()
+
+
+
+                
+          <div class="card center">
+          </div>
+              <!-- {{ image.image }} -->
+              <!-- <button type="button" class="close" onClick="deleteImg({{ image.id }})">
+                <span aria-hidden="true">&times;</span>
+              </button>    -->
+
+                  
+        <button type="button" class="close" onClick="deleteNote({{ image.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        
+        <a href="/viewshare" class="btn btn-primary">Send</a>    
