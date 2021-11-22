@@ -1,21 +1,14 @@
 from datetime import datetime
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, flash, current_app, send_file, send_from_directory, safe_join, abort
 import os
 from flask_mysqldb import MySQL, MySQLdb
 from sqlalchemy.sql.functions import now, user
 from werkzeug.utils import secure_filename
 from . import db
 from flask_login import current_user
+from .models import Img #mydb, mycursor,
 
 images = Blueprint( 'images', __name__)
-
-#DATABASE CONFIGURATIONS
-current_app.config['MYSQL_HOST'] = 'JanusHasie.mysql.pythonanywhere-services.com'
-current_app.config['MYSQL_USER'] = 'JanusHasie'
-current_app.config['MYSQL_PASSWORD'] ='Janaster0405'
-current_app.config['MYSQL_DB'] = 'JanusHasie$Project2DB'
-current_app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-mysql = MySQL(current_app)
 
 #PHOTO UPLOADS HERE
 UPLOAD_DIRECTORY = 'Website/static/uploadImg/'
@@ -27,20 +20,20 @@ def allowed_file(filename) :
 
 @images.route('/upload', methods = ['GET', 'POST'])
 def upload() :
-    cursor = mysql.connection.cursor()
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     now = datetime.now()
-    
+    #cur = mycursor
     if request.method == 'POST' :
         files = request.files.getlist('files[]')
         print(files)
         for file in files :
             if file and allowed_file(file.filename) :
                 filename = secure_filename(file.filename)
+                new_image = Img(image=file.filename, user_key=current_user.id, metadate=now)
                 file.save(os.path.join(current_app.config['UPLOAD_DIRECTORY'], filename))
-                cur.execute("INSERT INTO img (image, alt, metadate) VALUES (%b, 'alternative text here', %s)", [filename, now])
+                db.session.add(new_image)
+                db.session.commit()
 
-        flash('Your file(s) have been successfully uploaded!')
+        flash('Your file(s) have been successfully uploaded!', category='good')
     return render_template('upload.html', user=current_user)
 #END PHOTO UPLOAD
 #===============================================================
@@ -58,3 +51,6 @@ def viewshare() :
     return render_template("viewshare.html", user=current_user)
     #END PHOTO VIEWSHARE
 #===============================================================
+
+# cur.execute("INSERT INTO img (image, alt, metadate) VALUES (%b, %s)", [filename, now])
+                # mydb.commit()

@@ -1,8 +1,10 @@
 #Initialise
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_mysqldb import MySQL, MySQLdb
 from os import path
 from flask_login import LoginManager
+import mysql.connector
 
 db = SQLAlchemy()
 DB_OBJ = "database.db"
@@ -11,8 +13,7 @@ def create_app() :
     app = Flask(__name__)
     app.config['SECRET_KEY'] = '1234'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_OBJ}'
-    db.init_app(app)
-    
+    db.init_app(app)    
     
     from .views import views
     from .auth import auth
@@ -23,8 +24,6 @@ def create_app() :
     with app.app_context() :
         from .images import images
         app.register_blueprint(images, url_prefix='/')
-
-    
 
     from .models import User
     create_database(app)

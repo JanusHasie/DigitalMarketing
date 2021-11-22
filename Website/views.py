@@ -36,17 +36,5 @@ def delete_note():
 
     return jsonify({})
 
-#IMAGES UPLOAD
-@views.route("/upload-image", methods=["GET", "POST"])
-def upload_image() :
-    if request.method == "POST":
-        if request.files:
-            image = request.files["image"]
-            image.save(os.path.join())
-            return redirect(request.url)
-    return render_template("home.html", user=current_user)
-
-#IMAGES VIEW
-
 
 

@@ -8,7 +8,6 @@ import sshtunnel
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image = db.Column(db.BLOB)
     data = db.Column(db.CLOB)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -19,6 +18,22 @@ class User(db.Model, UserMixin) :
     password = db.Column(db.String(100))
     firstname = db.Column(db.String(100))
     notes = db.relationship('Note')
+    img = db.relationship('Img')
+
+class Img(db.Model) :
+    id = db.Column(db.Integer, primary_key=True)
+    user_key = db.Column(db.Integer, db.ForeignKey('user.id'))
+    image = db.Column(db.BLOB)
+    metadate = db.Column(db.DateTime(timezone=True), default=func.now()) 
+
+# mydb = mysql.connector.connect(
+#     host ="JanusHasie.mysql.pythonanywhere-services.com",
+#     user="JanusHasie",
+#     password="Janaster0405",
+#     database="JanusHasie$Project2DB"
+#     )
+
+# mycursor = mydb.cursor()
 
 # sshtunnel.SSH_TIMEOUT = 5.0
 # sshtunnel.TUNNEL_TIMEOUT = 5.0

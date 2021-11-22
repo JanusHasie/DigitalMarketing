@@ -1,9 +1,10 @@
 #Authorisation, security
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from .models import User #, mydb, mycursor
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from flask_mysqldb import MySQL, MySQLdb
 
 auth = Blueprint('auth', __name__)
 
@@ -12,8 +13,8 @@ def login() :
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-
         user = User.query.filter_by(email=email).first()
+
         if user:
             if check_password_hash(user.password, password):
                 flash('Logged in! Welcome!', category= 'good')
@@ -51,15 +52,22 @@ def sign_up() :
             flash('Passwords are not the same, please retry.', category='issue')
         elif len(password1)<6 :
             flash('Your password is less than 6 characters. Might cause weak security.', category='warning')
+            # curr.execute("INSERT INTO auth (email, password, firstname) VALUES (%s, %s, %s)", [email, password1, firstname])
+            # mydb.commit()
             new_user = User(email=email, firstname=firstname, password=generate_password_hash(password1, method="sha256"))
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for('views.home'))
         else :
+            # curr.execute("INSERT INTO auth (email, password, firstname) VALUES (%s, %s, %s)", [email, password1, firstname])
+            # mydb.commit()
             new_user = User(email=email, firstname=firstname, password=generate_password_hash(password1, method="sha256"))
             db.session.add(new_user)
             db.session.commit()
+            # curr.close()
             flash('Created Account!', category='good')
             return redirect(url_for('views.home'))
 
     return render_template("sign_up.html", user=current_user)
+
+#"""mysql = MySQL(current_app) curr = mycursor"""
