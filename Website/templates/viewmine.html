@@ -2,21 +2,18 @@
 
 <!-- View images in the form of cards -->
 <h1 align="center">View my images</h1>
-<form method= "POST">
-  <div class="card-deck">
-    {% for image in user.img %}
-          <div class="card">
-            <div class="card-body">
-              {{ imgage.image }}
-              <!-- <img class="card-img-top" src="/static/uploadImg/abstract.jpg" alt="Card image cap" h> -->
+<form method= "GET">
+    {% for image in Img %}
+          <div class="card center">
+              {{ image }}
+              <!-- <img class="card-img-top" src="/static/uploadImg" id = 'images' alt="Card image cap" h> -->
+              <!-- <img src="{{ url_for('static/uploadImg', filename= image.image) }}" alt="{{ image.metadate}} "> -->
               <a href="/viewshare" class="btn btn-primary">Send</a>
-              <button type="button" class="close" onClick="deleteNote({{ image.id }})">
+              <button type="button" class="close" onClick="deleteImg({{ image.id }})">
                 <span aria-hidden="true">&times;</span>
             </button>
-            </div>
           </div>   
     {% endfor %}
-  </div>
 </form>
     <!-- End of view images-->
 

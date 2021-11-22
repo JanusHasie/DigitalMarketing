@@ -8,7 +8,7 @@
         <form method="POST" action='/upload' enctype="multipart/form-data" class="form-inline">
             <div class="form-group">
                 <label>Choose Images:</label>
-                <input type="file" name="files[]" id="fileInput" class='form-control' multiple>
+                <input type="file" name="files[]" id="images" class='form-control' multiple>
             </div>
             <input type='submit' name='submit' class="btn btn-success" value="UPLOAD"/>
         </form>
@@ -17,7 +17,7 @@
 </div>
 <script>
     $(document).ready(function(){
-        $("#fileInput").change(function(){
+        $("#images").change(function(){
             var fileLength = this.files.length;
             var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
             var i;
@@ -26,7 +26,7 @@
                 var imagefile = file.type;
                 if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]) || (imagefile==match[3]))){
                     alert('Please select a valid image file (JPEG/JPG/PNG/GIF).');
-                    $("#fileInput").val('');
+                    $("#images").val('');
                     return false;
                 }
             }

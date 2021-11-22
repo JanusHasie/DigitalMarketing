@@ -1,12 +1,11 @@
 from datetime import datetime
-from flask import Blueprint, render_template, request, flash, current_app, send_file, send_from_directory, safe_join, abort
+from flask import Blueprint, render_template, request, flash, current_app, jsonify, send_file, send_from_directory, safe_join, abort
 import os
-from flask_mysqldb import MySQL, MySQLdb
-from sqlalchemy.sql.functions import now, user
+import json
 from werkzeug.utils import secure_filename
 from . import db
 from flask_login import current_user
-from .models import Img #mydb, mycursor,
+from .models import Img
 
 images = Blueprint( 'images', __name__)
 
@@ -28,7 +27,8 @@ def upload() :
         for file in files :
             if file and allowed_file(file.filename) :
                 filename = secure_filename(file.filename)
-                new_image = Img(image=file.filename, user_key=current_user.id, metadate=now)
+                mimetype = file.mimetype
+                new_image = Img(user_key=current_user.id, image=file.read(), name=filename, metadate=now)
                 file.save(os.path.join(current_app.config['UPLOAD_DIRECTORY'], filename))
                 db.session.add(new_image)
                 db.session.commit()
@@ -42,6 +42,20 @@ def upload() :
 @images.route('/viewmine', methods = ['GET'])
 def viewmine() :
     return render_template('viewmine.html', user=current_user)
+
+@images.route('/delete-img', methods=['GET','POST'])
+def delete_img(item_id):
+    images = json.loads(request.data)
+    imageId = images['imageId']
+    images = Img.query.get(imageId)
+    os.remove(os.path.join(current_app.config['UPLOAD_DIRECTORY'], images))
+    if images:
+        if images.user_id == current_user.id:
+            db.session.delete(images)
+            db.session.query(imageId).filter_by(item_id=imageId).delete()
+            db.session.commit()
+
+    return jsonify({})
     #END PHOTO VIEW
 #===============================================================
 
@@ -51,6 +65,3 @@ def viewshare() :
     return render_template("viewshare.html", user=current_user)
     #END PHOTO VIEWSHARE
 #===============================================================
-
-# cur.execute("INSERT INTO img (image, alt, metadate) VALUES (%b, %s)", [filename, now])
-                # mydb.commit()

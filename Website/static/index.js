@@ -6,3 +6,12 @@ function deleteNote(noteId) {
         window.location.href ="/";
     });
 }
+
+function deleteImg(imgId) {
+    fetch("/delete-img", {
+        method: "POST",
+        body: JSON.stringify({imgId: imgId}),
+    }).then((_res) => {
+        window.location.href = "/";
+    });
+}

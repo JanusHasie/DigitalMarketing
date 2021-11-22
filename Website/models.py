@@ -1,10 +1,18 @@
 #Database model
+from sqlalchemy.sql.expression import null
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 import mysql.connector
 import MySQLdb
 import sshtunnel
+
+class Img(db.Model) :
+    id = db.Column(db.Integer, primary_key=True)
+    user_key = db.Column(db.Integer, db.ForeignKey('user.id'))
+    image = db.Column(db.Text)
+    name = db.Column(db.String(100))
+    metadate = db.Column(db.DateTime(timezone=True), default=func.now())
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,13 +26,7 @@ class User(db.Model, UserMixin) :
     password = db.Column(db.String(100))
     firstname = db.Column(db.String(100))
     notes = db.relationship('Note')
-    img = db.relationship('Img')
-
-class Img(db.Model) :
-    id = db.Column(db.Integer, primary_key=True)
-    user_key = db.Column(db.Integer, db.ForeignKey('user.id'))
-    image = db.Column(db.BLOB)
-    metadate = db.Column(db.DateTime(timezone=True), default=func.now()) 
+    Img = db.relationship('Img')
 
 # mydb = mysql.connector.connect(
 #     host ="JanusHasie.mysql.pythonanywhere-services.com",

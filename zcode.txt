@@ -18,23 +18,5 @@
 #configure_uploads(images, photos)
 
 
-EXTENSIONS_ACCEPT = set(['png', 'jpg', 'jpeg', 'gif'])
-def allowed_file(filename) :
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in EXTENSIONS_ACCEPT
-
-@images.route('/upload', methods = ['GET', 'POST'])
-def upload() :
-    # if 'file' not in request.files :
-    #     flash('There is no image part', category="issue")
-    #     return redirect(request.url)
-    file = request.files['file']
-    if file.filename == "" :
-        flash("No image selected...", category='warning')
-        return redirect(request.url)
-    if file and allowed_file(file.filename) :
-        filename = secure_filename(file.filename)
-        file.save(os.path.join('static/uploadImg', filename ))
-        flash('Image has been uploaded successfully!', category='good')
-    #     img = "INSERT INTO img (image, alt) VALUES (%b, %s)"
-    #     val = ()
-    return render_template("upload.html", user=current_user, filename=filename)
+# cur.execute("INSERT INTO img () VALUES (%b, %s)", [filename, now])
+                # mydb.commit()
