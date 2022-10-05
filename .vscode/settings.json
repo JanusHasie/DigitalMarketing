@@ -1,4 +1,5 @@
 {
+    "python.pythonPath": "C:\\Users\\haasbroekj\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
     "appService.defaultWebAppToDeploy": "/subscriptions/407e764f-940a-4596-974c-d89cb96b29b6/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/DigitalMarket",
     "appService.deploySubpath": ".",
     "sqltools.connections": [
